@@ -12,11 +12,11 @@ chat_id = process.env.CHAT_ID;
 topic = process.env.TOPIC;
 telegraph_token = process.env.TELEGRAPH_TOKEN
 port = process.env.PORT;
-logger = process.env.LOGGER;
+logs = process.env.LOGGER;
 
 const server = new SMTPServer({
   authOptional: true,
-  logger: 0,
+  logger: true,
   //catch smtp message and parse it
   onData(stream, session, callback) {
     simpleParser(stream).then(mail => {
@@ -24,10 +24,10 @@ const server = new SMTPServer({
       mail_from = mail.from.text;
       mail_to = mail.to.text;
       mail_subject = mail.subject;
-      if (mail.text != undefined) {
+      if (mail.text != undefined && mail.text != '\n') {
         mail_text = mail.text;
       } else {
-        mail_text = mail.html;
+        mail_text = mail_subject;
       }
       //mail body to telegraph
       https.get('https://api.telegra.ph/createPage?access_token=' + telegraph_token + '&title=' + mail_subject + '&author_name=IT-teka+bot&content=[{"tag":"p","children":["' + mail_text + '"]}]', (resp) => {
@@ -47,4 +47,4 @@ const server = new SMTPServer({
     stream.on("end", callback);
   },
 });
-server.listen(2525);
+server.listen(2525,'0.0.0.0');
