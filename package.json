@@ -1,4 +1,12 @@
 {
+    "name": "send_smtp_to_telegram",
+    "version": "1.0.0",
+    "description": "Simple smtp to telegram transmitter",
+    "author": "Dmitry Soloviev",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
     "license": "(ISC OR GPL-3.0)",
     "dependencies": {
         "await": "^0.2.6",
