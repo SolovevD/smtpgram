@@ -3,5 +3,5 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 2525
+EXPOSE ${SMTP_PORT}
 CMD [ "node", "server.js" ]
